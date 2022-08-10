@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginSign extends AppCompatActivity {
     TextInputLayout email,password;
@@ -43,6 +44,7 @@ public class LoginSign extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             startActivity(new Intent(LoginSign.this, MainActivity.class));
+                            finish();
                         } else {
                             Toast.makeText(LoginSign.this, "Login not successfull", Toast.LENGTH_SHORT).show();
                         }
@@ -70,5 +72,17 @@ public class LoginSign extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = authww.getCurrentUser();
+
+        if (user != null) {
+            startActivity(new Intent(LoginSign.this, MainActivity.class));
+            finish();
+        }
     }
 }
