@@ -3,6 +3,7 @@ package com.example.mymessageapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +35,19 @@ public class LoginSign extends AppCompatActivity {
         logq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String ema = email.getEditText().getText().toString();
+                String qqa = password.getEditText().getText().toString();
 
+                authww.signInWithEmailAndPassword(ema,qqa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            startActivity(new Intent(LoginSign.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(LoginSign.this, "Login not successfull", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
